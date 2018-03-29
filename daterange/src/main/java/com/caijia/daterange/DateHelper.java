@@ -1,14 +1,17 @@
 package com.caijia.daterange;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by cai.jia on 2018/3/27.
  */
 
-class DateHelper {
+public class DateHelper {
 
     /**
      * 根据年份转变为该年的日期集合
@@ -42,6 +45,67 @@ class DateHelper {
     public static int getCurrentYear() {
         Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.YEAR);
+    }
+
+    /**
+     * 获取当前月份的第一天
+     * @return
+     */
+    public static DayBean getFirstDayOfCurrMonth(){
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        return new DayBean(year, month, 1);
+    }
+
+    /**
+     * 获取当前的时间
+     * @return
+     */
+    public static DayBean getCurrentDate(){
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        return new DayBean(year, month, day);
+    }
+
+    /**
+     * 获取当前日期的后多少天
+     * @param dayCount
+     * @return
+     */
+    public static DayBean getCurrentAfterDay(int dayCount) {
+        return getAfterDay(getCurrentDate(), dayCount);
+    }
+
+    /**
+     * 获取指定日期的后多少天
+     * @param dayBean
+     * @param dayCount
+     * @return
+     */
+    public static DayBean getAfterDay(DayBean dayBean, int dayCount) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(dayBean.getYear(),dayBean.getMonth() - 1,dayBean.getDay() + dayCount);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        return new DayBean(year, month, day);
+    }
+
+    /**
+     * 格式化日期
+     * @param dayBean
+     * @param format yyyy-MM-dd
+     * @return
+     */
+    public static String formatDate(DayBean dayBean, String format) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(dayBean.getYear(),dayBean.getMonth() - 1,dayBean.getDay());
+        Date date = calendar.getTime();
+        SimpleDateFormat d = new SimpleDateFormat(format, Locale.CHINESE);
+        return d.format(date);
     }
 
     /**

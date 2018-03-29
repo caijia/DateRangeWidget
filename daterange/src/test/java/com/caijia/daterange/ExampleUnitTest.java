@@ -12,6 +12,12 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+        DayBean currentAfterDay = DateHelper.getCurrentAfterDay(4);
+        System.out.println("当前日期的后多少天："+currentAfterDay);
+
+        DayBean firstDayOfCurrMonth = DateHelper.getFirstDayOfCurrMonth();
+        System.out.println("本月的第一天："+firstDayOfCurrMonth);
+
+        System.out.println(DateHelper.formatDate(currentAfterDay,"yyyy年MM月dd日"));
     }
 }

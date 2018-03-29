@@ -6,7 +6,7 @@ import java.util.List;
  * Created by cai.jia on 2018/3/27.
  */
 
-class MonthBean {
+public class MonthBean {
 
     private int year;
     private int month;
