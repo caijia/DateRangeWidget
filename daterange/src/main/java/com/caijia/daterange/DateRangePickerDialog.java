@@ -52,7 +52,7 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NORMAL, R.style.Dialog_full);
+        setStyle(STYLE_NORMAL, R.style.BottomSheetStyle);
         Bundle args = getArguments();
         if (args != null) {
             startDate = args.getParcelable(START_DATE);
