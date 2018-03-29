@@ -19,5 +19,8 @@ public class ExampleUnitTest {
         System.out.println("本月的第一天："+firstDayOfCurrMonth);
 
         System.out.println(DateHelper.formatDate(currentAfterDay,"yyyy年MM月dd日"));
+
+        DayBean dayBean = DateHelper.stringToDayBean("2015-02-11", "yyyy-MM-dd");
+        System.out.println("string to DayBean:" + dayBean);
     }
 }

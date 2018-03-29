@@ -1,5 +1,9 @@
 package com.caijia.daterange;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,9 +53,10 @@ public class DateHelper {
 
     /**
      * 获取当前月份的第一天
+     *
      * @return
      */
-    public static DayBean getFirstDayOfCurrMonth(){
+    public static @NonNull DayBean getFirstDayOfCurrMonth() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -59,10 +64,35 @@ public class DateHelper {
     }
 
     /**
-     * 获取当前的时间
+     * string的日期转成dayBean 2018-01-22
+     *
+     * @param strDate    2018-01-22
+     * @param pattern yyyy-MM-dd
      * @return
      */
-    public static DayBean getCurrentDate(){
+    public static @Nullable DayBean stringToDayBean(String strDate, String pattern) {
+        SimpleDateFormat d = new SimpleDateFormat(pattern, Locale.CHINESE);
+        try {
+            Date date = d.parse(strDate);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH) + 1;
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            return new DayBean(year, month, day);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取当前的时间
+     *
+     * @return
+     */
+    public static @NonNull DayBean getCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -72,6 +102,7 @@ public class DateHelper {
 
     /**
      * 获取当前日期的后多少天
+     *
      * @param dayCount
      * @return
      */
@@ -81,13 +112,14 @@ public class DateHelper {
 
     /**
      * 获取指定日期的后多少天
+     *
      * @param dayBean
      * @param dayCount
      * @return
      */
-    public static DayBean getAfterDay(DayBean dayBean, int dayCount) {
+    public static @NonNull DayBean getAfterDay(DayBean dayBean, int dayCount) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(dayBean.getYear(),dayBean.getMonth() - 1,dayBean.getDay() + dayCount);
+        calendar.set(dayBean.getYear(), dayBean.getMonth() - 1, dayBean.getDay() + dayCount);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -96,13 +128,14 @@ public class DateHelper {
 
     /**
      * 格式化日期
+     *
      * @param dayBean
-     * @param format yyyy-MM-dd
+     * @param format  yyyy-MM-dd
      * @return
      */
     public static String formatDate(DayBean dayBean, String format) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(dayBean.getYear(),dayBean.getMonth() - 1,dayBean.getDay());
+        calendar.set(dayBean.getYear(), dayBean.getMonth() - 1, dayBean.getDay());
         Date date = calendar.getTime();
         SimpleDateFormat d = new SimpleDateFormat(format, Locale.CHINESE);
         return d.format(date);

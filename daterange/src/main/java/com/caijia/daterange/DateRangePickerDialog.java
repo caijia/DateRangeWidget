@@ -70,6 +70,9 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
         tvPreYear = view.findViewById(R.id.tv_pre_year);
         tvFinish = view.findViewById(R.id.tv_finish);
 
+        boolean hasSelectedDate = startDate != null && endDate != null;
+        tvFinish.setVisibility(hasSelectedDate ? View.VISIBLE : View.GONE);
+
         tvAfterYear.setOnClickListener(this);
         tvPreYear.setOnClickListener(this);
         tvFinish.setOnClickListener(this);
