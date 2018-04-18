@@ -79,11 +79,14 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
         return view;
     }
 
+    private GridLayoutManager gridLayoutManager;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         pickerAdapter = new DateRangePickerAdapter(this);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
+        gridLayoutManager = new GridLayoutManager(getContext(), 7);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(pickerAdapter);
         selectYear = startDate != null ? startDate.getYear() : DateHelper.getCurrentYear();
         checkYearBounds();
@@ -152,7 +155,23 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
             List<DayBean> dateRangeList = pickerAdapter.getDateRange(dataList);
             pickerAdapter.setSelected(dateRangeList, true);
         }
+        int firstSelectedPosition = getFirstSelectedPosition(dataList);
+        gridLayoutManager.scrollToPositionWithOffset(firstSelectedPosition, 0);
         pickerAdapter.updateItems(dataList);
+    }
+
+    private int getFirstSelectedPosition(List<Object> dataList){
+        int index = 0;
+        for (Object o : dataList) {
+            if (o != null && o instanceof DayBean) {
+                DayBean dayBean = (DayBean) o;
+                if (dayBean.isSelected()) {
+                    break;
+                }
+            }
+            index++;
+        }
+        return index;
     }
 
     private List<DayBean> getStartEndDate() {
