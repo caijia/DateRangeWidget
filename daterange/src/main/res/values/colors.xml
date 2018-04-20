@@ -5,8 +5,9 @@
     <color name="color_00C2AD">#00C2AD</color>
     <color name="color_333333">#333333</color>
     <color name="transparent">#00000000</color>
-    <color name="color_7b11A6FF">#7b11a6ff</color>
-    <color name="color_11A6FF">#11a6ff</color>
+    <color name="color_ECECEC">#ECECEC</color>
+    <color name="color_11A6FF">#1EA1F3</color>
+    <color name="color_7b11A6FF">#7b1EA1F3</color>
     <color name="color_cecece">#CECECE</color>
     <color name="white">#ffffff</color>
 </resources>

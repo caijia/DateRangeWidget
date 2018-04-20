@@ -1,6 +1,8 @@
 package com.caijia.daterange;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,9 +21,17 @@ import java.util.List;
 class DayDelegate extends ItemViewDelegate<DayBean, DayDelegate.DayVH> {
 
     private OnDateClickListener onDateClickListener;
+    private int enableColor;
+    private int selectColor;
+    private int boundsColor;
+    private int normalColor;
 
-    public DayDelegate(OnDateClickListener onDateClickListener) {
+    public DayDelegate(Context context,OnDateClickListener onDateClickListener) {
         this.onDateClickListener = onDateClickListener;
+        enableColor = ContextCompat.getColor(context, R.color.color_cecece);
+        selectColor = ContextCompat.getColor(context, R.color.color_11A6FF);
+        normalColor = ContextCompat.getColor(context, R.color.color_333333);
+        boundsColor = ContextCompat.getColor(context, R.color.white);
     }
 
     @Override
@@ -33,9 +43,30 @@ class DayDelegate extends ItemViewDelegate<DayBean, DayDelegate.DayVH> {
     @Override
     public void onBindViewHolder(List<?> dataSource, DayBean item, RecyclerView.Adapter adapter,
                                  DayVH holder, int position) {
-        holder.tvDay.setEnabled(item.isEnable());
+        holder.tvStartOrEnd.setVisibility(item.isStartDate() || item.isEndDate() ? View.VISIBLE : View.GONE);
+        if (!item.isEnable()) {
+            holder.tvDay.setTextColor(enableColor);
+            holder.itemView.setBackgroundResource(R.drawable.shape_solid_00000000);
+
+        } else if (item.isStartDate()) {
+            holder.tvDay.setTextColor(boundsColor);
+            holder.itemView.setBackgroundResource(R.drawable.shape_solid_1ea1f3_lt4_lb4);
+            holder.tvStartOrEnd.setText("开始");
+
+        }else if (item.isEndDate()) {
+            holder.tvDay.setTextColor(boundsColor);
+            holder.itemView.setBackgroundResource(R.drawable.shape_solid_1ea1f3_rt4_rb4);
+            holder.tvStartOrEnd.setText("结束");
+
+        } else if (item.isSelected()) {
+            holder.tvDay.setTextColor(selectColor);
+            holder.itemView.setBackgroundResource(R.drawable.shape_solid_ececec);
+
+        }else{
+            holder.tvDay.setTextColor(normalColor);
+            holder.itemView.setBackgroundResource(R.drawable.shape_solid_00000000);
+        }
         holder.tvDay.setText(item.hasDate() ? String.valueOf(item.getDay()) : "");
-        holder.tvDay.setSelected(item.isSelected());
         holder.setItemExtra(item);
         holder.itemView.setOnClickListener(holder);
     }
@@ -68,12 +99,14 @@ class DayDelegate extends ItemViewDelegate<DayBean, DayDelegate.DayVH> {
 
     static class DayVH extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvDay;
+        TextView tvStartOrEnd;
         private DayBean itemExtra;
         private OnDateClickListener onDateClickListener;
 
         public DayVH(View itemView, OnDateClickListener onDateClickListener) {
             super(itemView);
             tvDay = itemView.findViewById(R.id.tv_day);
+            tvStartOrEnd = itemView.findViewById(R.id.tv_start_end);
             this.onDateClickListener = onDateClickListener;
             itemView.getLayoutParams().height = itemView.getContext().getResources()
                     .getDisplayMetrics().widthPixels / 7;

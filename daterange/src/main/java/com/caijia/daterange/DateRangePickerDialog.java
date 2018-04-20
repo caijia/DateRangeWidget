@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.math.MathUtils;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,16 +27,21 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
     private static final String START_DATE = "params:startDate";
     private static final String END_DATE = "params:endDate";
 
-    RecyclerView recyclerView;
-    TextView tvYear;
-    TextView tvAfterYear;
-    TextView tvPreYear;
-    TextView tvFinish;
+    private RecyclerView recyclerView;
+    private TextView tvYear;
+    private TextView tvAfterYear;
+    private TextView tvPreYear;
+    private TextView tvFinish;
+    private FrameLayout flTip;
+    private TextView tvTip;
+    private FrameLayout flFinish;
     private DateRangePickerAdapter pickerAdapter;
     private int selectYear;
     private DayBean startDate;
     private DayBean endDate;
     private OnDateRangeSelectListener onDateRangeSelectListener;
+    private GridLayoutManager gridLayoutManager;
+    private View startDateView;
 
     public static DateRangePickerDialog getInstance() {
         return new DateRangePickerDialog();
@@ -69,6 +76,9 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
         tvAfterYear = view.findViewById(R.id.tv_after_year);
         tvPreYear = view.findViewById(R.id.tv_pre_year);
         tvFinish = view.findViewById(R.id.tv_finish);
+        flTip = view.findViewById(R.id.fl_tip);
+        tvTip = view.findViewById(R.id.tv_tip);
+        flFinish = view.findViewById(R.id.fl_finish);
 
         boolean hasSelectedDate = startDate != null && endDate != null;
         tvFinish.setVisibility(hasSelectedDate ? View.VISIBLE : View.GONE);
@@ -79,12 +89,18 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
         return view;
     }
 
-    private GridLayoutManager gridLayoutManager;
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        pickerAdapter = new DateRangePickerAdapter(this);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (flTip != null && newState != RecyclerView.SCROLL_STATE_IDLE) {
+                    flTip.setVisibility(View.GONE);
+                }
+            }
+        });
+        pickerAdapter = new DateRangePickerAdapter(getContext(), this);
         gridLayoutManager = new GridLayoutManager(getContext(), 7);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(pickerAdapter);
@@ -146,6 +162,7 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
                     DayBean dayBean = (DayBean) o;
                     if (dayBean.dateIsEquals(startDate)) {
                         dayBean.setSelected(true);
+                        dayBean.setStartDate(true);
                         break;
                     }
                 }
@@ -160,7 +177,7 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
         pickerAdapter.updateItems(dataList);
     }
 
-    private int getFirstSelectedPosition(List<Object> dataList){
+    private int getFirstSelectedPosition(List<Object> dataList) {
         int index = 0;
         for (Object o : dataList) {
             if (o != null && o instanceof DayBean) {
@@ -209,10 +226,36 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
     }
 
     @Override
-    public void onDateRangeSelected(boolean isFinish, DayBean startDate, DayBean endDate) {
-        tvFinish.setVisibility(isFinish ? View.VISIBLE : View.GONE);
+    public void onDateRangeSelected(View view, boolean isFinish, DayBean startDate, DayBean endDate) {
+        startDateView = view;
         this.startDate = startDate;
         this.endDate = endDate;
+        tvFinish.setVisibility(isFinish ? View.VISIBLE : View.GONE);
+        flTip.setVisibility(isFinish ? View.GONE : View.VISIBLE);
+        if (!isFinish && startDate != null) {
+            showTip(view);
+        }
+    }
+
+    private void showTip(View anchor) {
+        if (anchor == null) {
+            return;
+        }
+        int range = recyclerView.computeVerticalScrollRange();
+        int offset = recyclerView.computeVerticalScrollOffset();
+        int extent = recyclerView.computeVerticalScrollExtent();
+        int bottomOffset = range - offset - extent;
+        int flFinishHeight = flFinish.getMeasuredHeight();
+        tvTip.setText("请选择结束时间");
+        int left = anchor.getLeft() - flTip.getWidth() / 2 + anchor.getMeasuredWidth() / 2;
+        int top = anchor.getTop() - flTip.getHeight();
+        left = MathUtils.clamp(left, 0, recyclerView.getMeasuredWidth() - flTip.getMeasuredWidth());
+        top = MathUtils.clamp(top, 0, recyclerView.getMeasuredHeight());
+        if (bottomOffset < flFinishHeight) {
+            top = top + flFinishHeight - bottomOffset;
+        }
+        flTip.setTranslationX(left);
+        flTip.setTranslationY(top);
     }
 
     public void setOnDateRangeSelectListener(OnDateRangeSelectListener l) {
@@ -221,6 +264,9 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
 
     @Override
     public void onClick(View v) {
+        if (flTip != null) {
+            flTip.setVisibility(View.GONE);
+        }
         if (v == tvPreYear) {
             --selectYear;
             updateAdapterData();
@@ -231,7 +277,7 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
 
         } else if (v == tvFinish) {
             if (onDateRangeSelectListener != null) {
-                onDateRangeSelectListener.onDateRangeSelected(true, startDate, endDate);
+                onDateRangeSelectListener.onDateRangeSelected(v, true, startDate, endDate);
             }
             dismissAllowingStateLoss();
         }

@@ -1,6 +1,8 @@
 package com.caijia.daterange;
 
+import android.view.View;
+
 public interface OnDateRangeSelectListener {
 
-    void onDateRangeSelected(boolean isFinish, DayBean startDate, DayBean endDate);
+    void onDateRangeSelected(View view,boolean isFinish, DayBean startDate, DayBean endDate);
 }

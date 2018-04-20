@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void showDateRange(View view) {
         DateRangePickerDialog instance = DateRangePickerDialog.getInstance(startDate, endDate);
-        instance.setOnDateRangeSelectListener((isFinish, startDate, endDate) -> {
+        instance.setOnDateRangeSelectListener((v,isFinish, startDate, endDate) -> {
             this.startDate = startDate;
             this.endDate = endDate;
             tvResult.setText(String.format(Locale.CHINESE,
