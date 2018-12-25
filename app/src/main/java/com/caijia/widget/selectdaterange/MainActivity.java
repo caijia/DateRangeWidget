@@ -1,15 +1,15 @@
 package com.caijia.widget.selectdaterange;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.caijia.daterange.DateRangePickerDialog;
 import com.caijia.daterange.DayBean;
-import com.caijia.daterange.OnDateRangeSelectListener;
 
 import java.util.Locale;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 

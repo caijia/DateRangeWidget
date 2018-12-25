@@ -1,8 +1,5 @@
 package com.caijia.daterange;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +9,10 @@ import com.caijia.adapterdelegate.ItemViewDelegate;
 
 import java.util.List;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by cai.jia on 2018/3/27.
@@ -28,7 +29,8 @@ class MonthDelegate extends ItemViewDelegate<MonthBean, MonthDelegate.MonthVH> {
     @Override
     public void onBindViewHolder(List<?> dataSource, MonthBean item, RecyclerView.Adapter adapter,
                                  MonthVH holder, int position) {
-        holder.tvDate.setText(String.format(Locale.CHINESE, "%d年%d月", item.getYear(), item.getMonth()));
+        holder.tvDate.setText(String.format(Locale.CHINESE,
+                "%d年%d月", item.getYear(), item.getMonth()));
     }
 
     @Override

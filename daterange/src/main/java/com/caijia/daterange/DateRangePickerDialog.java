@@ -1,12 +1,6 @@
 package com.caijia.daterange;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.math.MathUtils;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +12,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.math.MathUtils;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * Created by cai.jia on 2018/3/27.
  */
 
-public class DateRangePickerDialog extends DialogFragment implements OnDateRangeSelectListener, View.OnClickListener {
+public class DateRangePickerDialog extends DialogFragment implements
+        OnDateRangeSelectListener, View.OnClickListener {
 
     private static final String START_DATE = "params:startDate";
     private static final String END_DATE = "params:endDate";
@@ -69,8 +71,10 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_date_range_picker, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater
+                .inflate(R.layout.dialog_date_range_picker, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
         tvYear = view.findViewById(R.id.tv_year);
         tvAfterYear = view.findViewById(R.id.tv_after_year);
@@ -226,7 +230,8 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
     }
 
     @Override
-    public void onDateRangeSelected(View view, boolean isFinish, DayBean startDate, DayBean endDate) {
+    public void onDateRangeSelected(View view, boolean isFinish, DayBean startDate,
+                                    DayBean endDate) {
         startDateView = view;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -249,7 +254,8 @@ public class DateRangePickerDialog extends DialogFragment implements OnDateRange
         tvTip.setText("请选择结束时间");
         int left = anchor.getLeft() - flTip.getWidth() / 2 + anchor.getMeasuredWidth() / 2;
         int top = anchor.getTop() - flTip.getHeight();
-        left = MathUtils.clamp(left, 0, recyclerView.getMeasuredWidth() - flTip.getMeasuredWidth());
+        left = MathUtils.clamp(left, 0,
+                recyclerView.getMeasuredWidth() - flTip.getMeasuredWidth());
         top = MathUtils.clamp(top, 0, recyclerView.getMeasuredHeight());
         if (bottomOffset < flFinishHeight) {
             top = top + flFinishHeight - bottomOffset;

@@ -1,8 +1,5 @@
 package com.caijia.daterange;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Created by cai.jia on 2018/3/27.
@@ -56,7 +56,8 @@ public class DateHelper {
      *
      * @return
      */
-    public static @NonNull DayBean getFirstDayOfCurrMonth() {
+    public static @NonNull
+    DayBean getFirstDayOfCurrMonth() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -70,7 +71,8 @@ public class DateHelper {
      * @param pattern yyyy-MM-dd
      * @return
      */
-    public static @Nullable DayBean stringToDayBean(String strDate, String pattern) {
+    public static @Nullable
+    DayBean stringToDayBean(String strDate, String pattern) {
         SimpleDateFormat d = new SimpleDateFormat(pattern, Locale.CHINESE);
         try {
             Date date = d.parse(strDate);

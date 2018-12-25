@@ -38,7 +38,8 @@ class DateRangePickerAdapter extends LoadMoreDelegationAdapter {
                 setStateEndDateFlag();
                 notifyDataSetChanged();
                 if (onDateRangeSelectListener != null) {
-                    onDateRangeSelectListener.onDateRangeSelected(view, false, dayBean, null);
+                    onDateRangeSelectListener.onDateRangeSelected(view, false,
+                            dayBean, null);
                 }
 
             } else if (startEndDate.size() == 2) {
@@ -51,7 +52,8 @@ class DateRangePickerAdapter extends LoadMoreDelegationAdapter {
                     setStateEndDateFlag();
                     notifyDataSetChanged();
                     if (onDateRangeSelectListener != null) {
-                        onDateRangeSelectListener.onDateRangeSelected(view, true, start, end);
+                        onDateRangeSelectListener.onDateRangeSelected(view, true, start,
+                                end);
                     }
 
                 } else {
@@ -61,7 +63,8 @@ class DateRangePickerAdapter extends LoadMoreDelegationAdapter {
                     setStateEndDateFlag();
                     notifyDataSetChanged();
                     if (onDateRangeSelectListener != null) {
-                        onDateRangeSelectListener.onDateRangeSelected(view, false, end, null);
+                        onDateRangeSelectListener.onDateRangeSelected(view, false, end,
+                                null);
                     }
                 }
             }
