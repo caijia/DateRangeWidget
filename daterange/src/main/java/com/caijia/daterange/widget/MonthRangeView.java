@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MonthView extends FrameLayout implements View.OnClickListener,
+public class MonthRangeView extends FrameLayout implements View.OnClickListener,
         PageChangeSnapHelper.OnPageChangeListener, MonthChildDelegate.OnMonthClickListener {
 
     private TextView tvTitle;
@@ -37,22 +37,22 @@ public class MonthView extends FrameLayout implements View.OnClickListener,
     private OnMonthTitleClickListener onMonthTitleClickListener;
     private MonthChildDelegate.OnMonthClickListener onMonthClickListener;
 
-    public MonthView(@NonNull Context context) {
+    public MonthRangeView(@NonNull Context context) {
         this(context, null);
     }
 
-    public MonthView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public MonthRangeView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MonthView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MonthRangeView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
         View childView = LayoutInflater.from(context)
-                .inflate(R.layout.view_month, this, false);
+                .inflate(R.layout.view_month_range, this, false);
         addView(childView);
 
         tvPrevious = childView.findViewById(R.id.tv_previous);
@@ -94,7 +94,39 @@ public class MonthView extends FrameLayout implements View.OnClickListener,
     }
 
     public void setMonth(MonthBean month) {
+        if (yearBeans == null) {
+            return;
+        }
 
+        int index = 0;
+        int selectIndex = -1;
+        for (YearBean yearBean : yearBeans) {
+            if (month.getYear() == yearBean.getYear()) {
+                List<MonthBean> monthBeans = yearBean.getMonthBeans();
+                if (monthBeans == null) {
+                    monthBeans = DateHelper.toMonthList(month.getYear(), true);
+                    yearBean.setMonthBeans(monthBeans);
+                }
+                selectIndex = index;
+            }
+
+
+            List<MonthBean> monthBeans = yearBean.getMonthBeans();
+            if (monthBeans != null) {
+                //selected
+                for (MonthBean monthBean : monthBeans) {
+                    monthBean.setSelect(month.getYear() == monthBean.getYear() &&
+                            month.getMonth() == monthBean.getMonth());
+                }
+            }
+            index++;
+        }
+
+        if (selectIndex != -1) {
+            currentPosition = selectIndex;
+            tvTitle.setText(String.valueOf(month.getYear()));
+            recyclerView.scrollToPosition(selectIndex);
+        }
     }
 
     private void previous() {
@@ -115,7 +147,7 @@ public class MonthView extends FrameLayout implements View.OnClickListener,
 
         } else if (v == tvTitle) {
             if (onMonthTitleClickListener != null) {
-                onMonthTitleClickListener.onMonthTitleClick();
+                onMonthTitleClickListener.onMonthTitleClick(yearBeans.get(currentPosition));
             }
         }
     }
@@ -175,6 +207,6 @@ public class MonthView extends FrameLayout implements View.OnClickListener,
     }
 
     public interface OnMonthTitleClickListener {
-        void onMonthTitleClick();
+        void onMonthTitleClick(YearBean yearBean);
     }
 }

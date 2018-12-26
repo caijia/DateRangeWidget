@@ -6,6 +6,7 @@ public class YearBean {
 
     private int year;
     private List<MonthBean> monthBeans;
+    private boolean select;
 
     public YearBean(int year, List<MonthBean> monthBeans) {
         this.year = year;
@@ -33,5 +34,13 @@ public class YearBean {
 
     public void setMonthBeans(List<MonthBean> monthBeans) {
         this.monthBeans = monthBeans;
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
     }
 }

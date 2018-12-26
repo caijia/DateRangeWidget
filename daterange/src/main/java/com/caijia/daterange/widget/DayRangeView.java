@@ -119,6 +119,7 @@ public class DayRangeView extends FrameLayout implements View.OnClickListener,
             index++;
         }
         if (selectIndex != -1) {
+            currentPosition = selectIndex;
             setTitle(bean);
             recyclerView.scrollToPosition(selectIndex);
         }
@@ -242,6 +243,10 @@ public class DayRangeView extends FrameLayout implements View.OnClickListener,
         for (DayBean dayBean : list) {
             dayBean.setSelected(isSelected);
         }
+    }
+
+    public List<DayBean> getStartEndDate() {
+        return startEndDate;
     }
 
     public List<DayBean> getDateRange() {

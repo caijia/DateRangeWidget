@@ -2,6 +2,8 @@ package com.caijia.daterange;
 
 import com.caijia.daterange.entity.DayBean;
 import com.caijia.daterange.entity.MonthBean;
+import com.caijia.daterange.entity.YearBean;
+import com.caijia.daterange.entity.YearRange;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -82,7 +84,7 @@ public class DateHelper {
     /**
      * string的日期转成dayBean 2018-01-22
      *
-     * @param strDate    2018-01-22
+     * @param strDate 2018-01-22
      * @param pattern yyyy-MM-dd
      * @return
      */
@@ -109,7 +111,8 @@ public class DateHelper {
      *
      * @return
      */
-    public static @NonNull DayBean getCurrentDate() {
+    public static @NonNull
+    DayBean getCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -134,7 +137,8 @@ public class DateHelper {
      * @param dayCount
      * @return
      */
-    public static @NonNull DayBean getAfterDay(DayBean dayBean, int dayCount) {
+    public static @NonNull
+    DayBean getAfterDay(DayBean dayBean, int dayCount) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(dayBean.getYear(), dayBean.getMonth() - 1, dayBean.getDay() + dayCount);
         int year = calendar.get(Calendar.YEAR);
@@ -208,5 +212,29 @@ public class DateHelper {
             }
         }
         return dayList;
+    }
+
+    /**
+     * 根据当前年份计算年份集合
+     *
+     * @param totalYear 总年数量
+     * @param pageCount 每页年数量
+     * @return
+     */
+    public static List<YearRange> toYearRange(int totalYear, int pageCount) {
+        int currentYear = getCurrentYear();
+        List<YearRange> list = new ArrayList<>();
+        int page = totalYear / pageCount + (totalYear % pageCount == 0 ? 0 : 1);
+        for (int i = 0; i < page; i++) {
+            List<YearBean> yearBeans = new ArrayList<>();
+            for (int j = 0; j < pageCount; j++) {
+                YearBean yearBean = new YearBean();
+                yearBean.setYear(currentYear - i * pageCount - j);
+                yearBeans.add(0, yearBean);
+            }
+            YearRange yearRange = new YearRange(yearBeans);
+            list.add(0, yearRange);
+        }
+        return list;
     }
 }
