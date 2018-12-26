@@ -1,4 +1,4 @@
-package com.caijia.daterange;
+package com.caijia.daterange.delegate;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.caijia.adapterdelegate.ItemViewDelegate;
+import com.caijia.daterange.R;
+import com.caijia.daterange.entity.DayBean;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by cai.jia on 2018/3/27.
  */
 
-class DayDelegate extends ItemViewDelegate<DayBean, DayDelegate.DayVH> {
+public class DayDelegate extends ItemViewDelegate<DayBean, DayDelegate.DayVH> {
 
     private OnDateClickListener onDateClickListener;
     private int enableColor;
@@ -27,7 +29,7 @@ class DayDelegate extends ItemViewDelegate<DayBean, DayDelegate.DayVH> {
     private int boundsColor;
     private int normalColor;
 
-    public DayDelegate(Context context,OnDateClickListener onDateClickListener) {
+    public DayDelegate(Context context, OnDateClickListener onDateClickListener) {
         this.onDateClickListener = onDateClickListener;
         enableColor = ContextCompat.getColor(context, R.color.color_cecece);
         selectColor = ContextCompat.getColor(context, R.color.color_11A6FF);
@@ -52,18 +54,18 @@ class DayDelegate extends ItemViewDelegate<DayBean, DayDelegate.DayVH> {
         } else if (item.isStartDate()) {
             holder.tvDay.setTextColor(boundsColor);
             holder.itemView.setBackgroundResource(R.drawable.shape_solid_1ea1f3_lt4_lb4);
-            holder.tvStartOrEnd.setText("开始");
+            holder.tvStartOrEnd.setText("开始时间");
 
-        }else if (item.isEndDate()) {
+        } else if (item.isEndDate()) {
             holder.tvDay.setTextColor(boundsColor);
             holder.itemView.setBackgroundResource(R.drawable.shape_solid_1ea1f3_rt4_rb4);
-            holder.tvStartOrEnd.setText("结束");
+            holder.tvStartOrEnd.setText("结束时间");
 
         } else if (item.isSelected()) {
             holder.tvDay.setTextColor(selectColor);
             holder.itemView.setBackgroundResource(R.drawable.shape_solid_ececec);
 
-        }else{
+        } else {
             holder.tvDay.setTextColor(normalColor);
             holder.itemView.setBackgroundResource(R.drawable.shape_solid_00000000);
         }
@@ -83,10 +85,6 @@ class DayDelegate extends ItemViewDelegate<DayBean, DayDelegate.DayVH> {
         return item instanceof DayBean;
     }
 
-    @Override
-    public int maxRecycledViews() {
-        return 35;
-    }
 
     @Override
     public int getSpanCount(GridLayoutManager layoutManager) {

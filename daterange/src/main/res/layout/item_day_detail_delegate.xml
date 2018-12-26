@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="46dp"
-    android:minHeight="46dp"
     android:background="@drawable/selector_solid_ececec_00000000"
+    android:minHeight="46dp"
     android:orientation="vertical">
 
     <TextView
@@ -23,8 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tv_day"
-        android:textColor="@color/white"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
         android:textSize="8sp"
         android:visibility="gone"
         tools:text="开始时间"

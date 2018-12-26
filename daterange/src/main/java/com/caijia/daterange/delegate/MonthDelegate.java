@@ -1,4 +1,4 @@
-package com.caijia.daterange;
+package com.caijia.daterange.delegate;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.caijia.adapterdelegate.ItemViewDelegate;
+import com.caijia.daterange.R;
+import com.caijia.daterange.entity.MonthBean;
 
 import java.util.List;
 import java.util.Locale;
@@ -18,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by cai.jia on 2018/3/27.
  */
 
-class MonthDelegate extends ItemViewDelegate<MonthBean, MonthDelegate.MonthVH> {
+public class MonthDelegate extends ItemViewDelegate<MonthBean, MonthDelegate.MonthVH> {
 
     @Override
     public MonthVH onCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {

@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.caijia.daterange.DateRangePickerDialog;
-import com.caijia.daterange.DayBean;
+import com.caijia.daterange.entity.DayBean;
+import com.caijia.daterange.widget.DateRangePickerDialog;
 
 import java.util.Locale;
 

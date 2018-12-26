@@ -1,5 +1,7 @@
 package com.caijia.daterange;
 
+import com.caijia.daterange.entity.DayBean;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -1,10 +1,12 @@
-package com.caijia.daterange;
+package com.caijia.daterange.delegate;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.caijia.adapterdelegate.ItemViewDelegate;
+import com.caijia.daterange.R;
+import com.caijia.daterange.entity.HorizontalDivider;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by cai.jia on 2018/3/27.
  */
 
-class HorizontalDividerDelegate extends ItemViewDelegate<HorizontalDivider,
+public class HorizontalDividerDelegate extends ItemViewDelegate<HorizontalDivider,
         HorizontalDividerDelegate.HorizontalDividerVH> {
 
     @Override

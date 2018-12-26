@@ -1,8 +1,13 @@
-package com.caijia.daterange;
+package com.caijia.daterange.adapter;
 
 import android.content.Context;
 
 import com.caijia.adapterdelegate.LoadMoreDelegationAdapter;
+import com.caijia.daterange.OnDateRangeSelectListener;
+import com.caijia.daterange.delegate.DayDelegate;
+import com.caijia.daterange.delegate.HorizontalDividerDelegate;
+import com.caijia.daterange.delegate.MonthDelegate;
+import com.caijia.daterange.entity.DayBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +16,7 @@ import java.util.List;
  * Created by cai.jia on 2018/3/27.
  */
 
-class DateRangePickerAdapter extends LoadMoreDelegationAdapter {
+public class DateRangePickerAdapter extends LoadMoreDelegationAdapter {
 
     private List<DayBean> startEndDate;
 

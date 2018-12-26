@@ -1,4 +1,4 @@
-package com.caijia.daterange;
+package com.caijia.daterange.entity;
 
 import java.util.List;
 
@@ -11,6 +11,29 @@ public class MonthBean {
     private int year;
     private int month;
     private List<DayBean> dayList;
+    private boolean select;
+
+    public MonthBean(int year, int month, List<DayBean> dayList) {
+        this.year = year;
+        this.month = month;
+        this.dayList = dayList;
+    }
+
+    public MonthBean(int year, int month) {
+        this.year = year;
+        this.month = month;
+    }
+
+    public MonthBean() {
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
 
     public List<DayBean> getDayList() {
         return dayList;

@@ -1,5 +1,8 @@
 package com.caijia.daterange;
 
+import com.caijia.daterange.entity.DayBean;
+import com.caijia.daterange.entity.MonthBean;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +27,16 @@ public class DateHelper {
      * @return 日期集合
      */
     public static List<MonthBean> toMonthList(int year) {
+        return toMonthList(year, false);
+    }
+
+    /**
+     * 根据年份转变为该年的日期集合
+     *
+     * @param year 年
+     * @return 日期集合
+     */
+    public static List<MonthBean> toMonthList(int year, boolean lazy) {
         Calendar calendar = Calendar.getInstance();
         int currYear = calendar.get(Calendar.YEAR);
         int monthCount = 12;
@@ -35,7 +48,9 @@ public class DateHelper {
             MonthBean monthBean = new MonthBean();
             monthBean.setYear(year);
             monthBean.setMonth((i + 1));
-            monthBean.setDayList(toDayList(year, i));
+            if (!lazy) {
+                monthBean.setDayList(toDayList(year, i));
+            }
             monthList.add(monthBean);
         }
         return monthList;

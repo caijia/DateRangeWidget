@@ -1,4 +1,4 @@
-package com.caijia.daterange;
+package com.caijia.daterange.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
