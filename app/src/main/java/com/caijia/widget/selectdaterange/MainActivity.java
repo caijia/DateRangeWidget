@@ -32,6 +32,52 @@ public class MainActivity extends AppCompatActivity {
         selectDateView.setType(SelectDateView.TYPE_DAY);
 //        selectDateView.setType(SelectDateView.TYPE_MONTH);
 //        selectDateView.setType(SelectDateView.TYPE_YEAR);
+
+//        LineChart lineChart = findViewById(R.id.chart);
+//        lineChart.setDoubleTapToZoomEnabled(false);
+//
+//        //设置样式
+//        YAxis rightAxis = lineChart.getAxisRight();
+//        rightAxis.setEnabled(false);
+//
+//        YAxis leftAxis = lineChart.getAxisLeft();
+//        leftAxis.setEnabled(true);
+//        leftAxis.setDrawGridLines(false);
+//        leftAxis.setAxisMinimum(0);
+//
+//        //设置x轴
+//        XAxis xAxis = lineChart.getXAxis();
+//        xAxis.setDrawLabels(true);//绘制标签  指x轴上的对应数值
+//        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
+//        xAxis.setDrawGridLines(false);
+//        xAxis.setAxisMaximum(24);
+////        xAxis.setLabelCount(4,true);
+//
+//        //透明化图例
+//        Legend legend = lineChart.getLegend();
+//        legend.setForm(Legend.LegendForm.NONE);
+//        legend.setTextColor(Color.TRANSPARENT);
+//
+//        //隐藏x轴描述
+//        Description description = new Description();
+//        description.setEnabled(false);
+//        lineChart.setDescription(description);
+//
+//        List<Entry> entries = new ArrayList<>();
+//
+//        for (int i = 6; i < 12; i++) {
+//            entries.add(new Entry(i, i));
+//        }
+//
+//        LineDataSet dataSet = new LineDataSet(entries, "");
+//        dataSet.setDrawCircles(false);
+//        dataSet.setHighlightEnabled(false);
+//        dataSet.setDrawValues(false);
+//        dataSet.setColor(Color.CYAN);
+//
+//        LineData lineData = new LineData(dataSet);
+//        lineChart.setData(lineData);
+//        lineChart.setVisibleXRangeMaximum(8);
     }
 
     public void showDateRange(View view) {

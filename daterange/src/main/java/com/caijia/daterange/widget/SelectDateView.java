@@ -20,10 +20,14 @@ public class SelectDateView extends FrameLayout implements DayRangeView.OnDayTit
         MonthChildDelegate.OnMonthClickListener, MonthRangeView.OnMonthTitleClickListener,
         YearChildDelegate.OnYearClickListener {
 
+    public static final int TYPE_DAY = 1;
+    public static final int TYPE_MONTH = 2;
+    public static final int TYPE_YEAR = 3;
     private YearRangeView yearRangeView;
     private MonthRangeView monthRangeView;
     private DayRangeView dayRangeView;
-
+    private MonthBean selectMonth;
+    private YearBean selectYear;
     public SelectDateView(@NonNull Context context) {
         this(context, null);
     }
@@ -36,20 +40,16 @@ public class SelectDateView extends FrameLayout implements DayRangeView.OnDayTit
         super(context, attrs, defStyleAttr);
     }
 
-    public static final int TYPE_DAY = 1;
-    public static final int TYPE_MONTH = 2;
-    public static final int TYPE_YEAR = 3;
-
     public void setType(int type) {
         switch (type) {
-            case TYPE_DAY:{
+            case TYPE_DAY: {
                 dayRangeView = new DayRangeView(getContext());
                 dayRangeView.setOnDayTitleClickListener(this);
                 addView(dayRangeView);
                 break;
             }
 
-            case TYPE_MONTH:{
+            case TYPE_MONTH: {
                 monthRangeView = new MonthRangeView(getContext());
                 monthRangeView.setOnMonthClickListener(this);
                 monthRangeView.setOnMonthTitleClickListener(this);
@@ -57,7 +57,7 @@ public class SelectDateView extends FrameLayout implements DayRangeView.OnDayTit
                 break;
             }
 
-            case TYPE_YEAR:{
+            case TYPE_YEAR: {
                 yearRangeView = new YearRangeView(getContext());
                 yearRangeView.setOnYearClickListener(this);
                 addView(yearRangeView);
@@ -78,9 +78,6 @@ public class SelectDateView extends FrameLayout implements DayRangeView.OnDayTit
         this.selectMonth = monthBean;
         monthRangeView.setMonth(monthBean);
     }
-
-    private MonthBean selectMonth;
-    private YearBean selectYear;
 
     @Override
     public void onMonthClick(View v, MonthBean bean, int position) {
@@ -112,18 +109,18 @@ public class SelectDateView extends FrameLayout implements DayRangeView.OnDayTit
         }
     }
 
-    public List<DayBean> getDateRange(){
+    public List<DayBean> getDateRange() {
         if (dayRangeView != null) {
             return dayRangeView.getStartEndDate();
         }
         return null;
     }
 
-    public MonthBean getSelectMonth(){
+    public MonthBean getSelectMonth() {
         return selectMonth;
     }
 
-    public YearBean getSelectYear(){
+    public YearBean getSelectYear() {
         return selectYear;
     }
 

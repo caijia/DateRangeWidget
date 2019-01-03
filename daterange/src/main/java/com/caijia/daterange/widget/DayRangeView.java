@@ -189,8 +189,7 @@ public class DayRangeView extends FrameLayout implements View.OnClickListener,
                 setStateEndDateFlag();
                 adapter.updateItems(monthBeanList);
                 if (onDateRangeSelectListener != null) {
-                    onDateRangeSelectListener.onDateRangeSelected(view, true, start,
-                            end);
+                    onDateRangeSelectListener.onDateRangeSelected(view, true, start, end);
                 }
 
             } else {
@@ -200,8 +199,7 @@ public class DayRangeView extends FrameLayout implements View.OnClickListener,
                 setStateEndDateFlag();
                 adapter.updateItems(monthBeanList);
                 if (onDateRangeSelectListener != null) {
-                    onDateRangeSelectListener.onDateRangeSelected(view, false, end,
-                            null);
+                    onDateRangeSelectListener.onDateRangeSelected(view, false, end, null);
                 }
             }
         }

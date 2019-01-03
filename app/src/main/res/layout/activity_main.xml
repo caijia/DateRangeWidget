@@ -32,6 +32,7 @@
         android:text="结果" />
 
     <androidx.cardview.widget.CardView
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp">
@@ -44,5 +45,11 @@
         </com.caijia.daterange.widget.SelectDateView>
 
     </androidx.cardview.widget.CardView>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:visibility="gone" />
 
 </RelativeLayout>
